@@ -1,0 +1,49 @@
+[language-server.deno-lsp]
+args = ["lsp"]
+command = "deno"
+required-root-patterns = ["deno.*"]
+
+[language-server.deno-lsp.config.deno]
+enable = true
+suggest = { completeFunctionCalls = true, imports = { hosts = { "https://deno.land" = true } } }
+
+[language-server.typescript-language-server]
+required-root-patterns = ["package.json", "tsconfig.json"]
+
+[[language]]
+name = "javascript"
+language-id = "javascript"
+scope = "source.js"
+injection-regex = "^(js|javascript)$"
+file-types = ["js"]
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "deno-lsp" },
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+]
+formatter = { command = "deno", args = [
+  "fmt",
+] }
+
+[[language]]
+name = "typescript"
+language-id = "typescript"
+scope = "source.ts"
+injection-regex = "^(ts|typescript)$"
+file-types = ["ts"]
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "deno-lsp" },
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+]
+formatter = { command = "deno", args = [
+  "fmt",
+] }
